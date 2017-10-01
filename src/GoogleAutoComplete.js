@@ -9,22 +9,27 @@ class GoogleAutoComplete extends React.Component {
     }
 
     handleFormSubmit = (event) => {
-        event.preventDefault()
-        Promise.all([
-            this.getLocation(this.state.source),
-            this.getLocation(this.state.destination)
-        ]).then(result => {
-            this.props.getLocation(null,{
-                source:result[0],
-                destination:result[1]
+        event.preventDefault();
+        let query = [];
+        if(this.state.source){
+            query.push(this.getLocation(this.state.source));
+        }
+        if(this.state.destination){
+            query.push(this.getLocation(this.state.destination));
+        }
+        Promise.all(query).then(result => {
+            this.props.getLocation(null, {
+                source: result[0],
+                destination: result[1]
 
             });
             return result;
         }).catch(error => {
+            console.log("destination>>>>>", error);
             this.props.getLocation(error);
             throw  error;
         });
-    }
+    };
     getLocation(location){
         return geocodeByAddress(location)
             .then(results => {

@@ -5,15 +5,14 @@
 import  React from "react";
 import MarkerClusterer from "react-google-maps/lib/components/addons/MarkerClusterer";
 import {
-    withScriptjs,
-    withGoogleMap,
     GoogleMap,
     DirectionsRenderer,
     Marker,
 } from "react-google-maps";
 import  GoogleAutoComplete from "./GoogleAutoComplete"
-var google = window.google;
+
 import Feeder from "./Feeder"
+import  AutoSuggest from "./AutoSuggest"
 class GoogleMapComponent extends React.Component {
     constructor(props) {
         super(props);
@@ -23,46 +22,48 @@ class GoogleMapComponent extends React.Component {
     componentWillMount() {
         this.setState({})
     }
-    getLocation(error,{source,destination}){
+    getLocation(error,props){
+        let {source, destination} = props;
         if(source && destination){
             this.props.directionFetch(source, destination);
         }else {
-            this.props.fetchData()
+            this.props.getWithInArea(source || destination)
         }
-
-
     }
     componentDidMount() {
-         this.props.fetchData();
+         this.props.getWithInArea();
     }
-
     render() {
-        let {directions, markers} = this.props;
+        let {directions, markers,gpsPosition} = this.props;
         // if (!this.state.markers) {
         //     return <div>loading.....</div>;
         // }
         return ( <div>
+
             <div>
                 <GoogleAutoComplete getLocation={this.getLocation}/>
             </div>
             <GoogleMap
-            defaultZoom={3}
-            defaultCenter={{lat: 28.7041, lng: 77.1025}}
-        >
-            {markers &&  <MarkerClusterer
-                averageCenter
-                enableRetinaIcons
-                gridSize={60}
+                defaultZoom={5}
+                defaultCenter={{lat: 28.7041, lng: 77.1025}}
             >
-                {markers.map(marker => (
-                    <Marker
-                        key={marker.imei}
-                        position={{lat: marker.lat, lng: marker.lng}}
-                    />
-                ))}
-            </MarkerClusterer>}
-            {directions && <DirectionsRenderer directions={directions} />}
-        </GoogleMap></div>)
+                {gpsPosition && <Marker
+                    position={{ lat: gpsPosition.lat, lng:  gpsPosition.lng}}
+                />}
+                {markers && <MarkerClusterer
+                    averageCenter
+                    enableRetinaIcons
+                    gridSize={60}
+                >
+                    {markers.map(marker => (
+                        <Marker
+                            key={marker.imei}
+                            position={{lat: marker.lat, lng: marker.lng}}
+                        />
+                    ))}
+                </MarkerClusterer>}
+                {directions && <DirectionsRenderer directions={directions}/>}
+            </GoogleMap><div><AutoSuggest {...this.props} /></div></div>);
     }
 }
 

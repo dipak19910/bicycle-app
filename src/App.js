@@ -1,14 +1,9 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
-var google = window.google;
-import fetch from "isomorphic-fetch";
-import { compose, withProps, lifecycle } from "recompose";
+import { compose, withProps } from "recompose";
 import {
     withScriptjs,
     withGoogleMap,
-    GoogleMap,
-    Marker,
 } from "react-google-maps";
 
 

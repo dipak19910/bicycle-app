@@ -14,7 +14,6 @@ var unSubscribeSocket = viewName => {
 
 /** save the map of every viewInfo with callback @sunil*/
 var saveSubscriptionInfo = (viewInfo, callback) => {
-    console.log("viewInfo>>", viewInfo );
     ViewIdSubscriptionMap[viewInfo.imei]= ViewIdSubscriptionMap[viewInfo.imei] || {}
     ViewIdSubscriptionMap[viewInfo.imei]= {
       callback
