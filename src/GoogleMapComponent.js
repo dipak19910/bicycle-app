@@ -13,6 +13,7 @@ import  GoogleAutoComplete from "./GoogleAutoComplete"
 
 import Feeder from "./Feeder"
 import  AutoSuggest from "./AutoSuggest"
+import HumanBody from "./HumanBody"
 class GoogleMapComponent extends React.Component {
     constructor(props) {
         super(props);
@@ -63,7 +64,7 @@ class GoogleMapComponent extends React.Component {
                     ))}
                 </MarkerClusterer>}
                 {directions && <DirectionsRenderer directions={directions}/>}
-            </GoogleMap><div><AutoSuggest {...this.props} /></div></div>);
+            </GoogleMap><div><AutoSuggest {...this.props} ><HumanBody/></AutoSuggest></div></div>);
     }
 }
 

@@ -61,7 +61,7 @@ module.exports = Component => {
             return this.fetchData(url);
         }
         /*choose a bycle*/
-        chooseImeiBicycle({source, destination, speed, imei}) {
+        chooseImeiBicycle({source, destination, speed, imei,age,sex,weight,heartRate}) {
             this.imei = imei;
             saveSubscriptionInfo({imei: this.imei, source, destination, speed}, (data) => {
                 this.setState({
@@ -73,7 +73,11 @@ module.exports = Component => {
                 source: JSON.stringify(source),
                 destination: JSON.stringify(destination),
                 speed,
-                imei
+                imei,
+                age,
+                sex,
+                weight,
+                heartRate
             })}`;
             this.fetchData(url);
         }
